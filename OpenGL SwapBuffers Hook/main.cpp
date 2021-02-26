@@ -3,6 +3,20 @@
 PTR SwapBuffersAddr;
 wglSwapBuffers oSwapBuffers;
 
+ void DrawFilledRect(float x, float y, float width, float height)
+ {
+ 	glColor3ub(255, 0, 0);
+ 	glBegin(GL_QUADS);
+ 	glVertex2f(x, y);
+ 	glVertex2f(x + width, y);
+ 	glVertex2f(x + width, y + height);
+ 	glVertex2f(x, y + height);
+ 	glEnd();
+
+ }
+
+
+
 bool init = false;
 BOOL __stdcall PHook::hkSwapBuffers(_In_ HDC hdc)
 {
@@ -13,7 +27,10 @@ BOOL __stdcall PHook::hkSwapBuffers(_In_ HDC hdc)
 	}
 	PHook::SetupOrtho();
 	//Draw Here
-	PHook::Restore();
+	DrawFilledRect(100, 100, 100, 100);
+	
+	
+	//PHook::Restore(); breaks osu!
 	return oSwapBuffers(hdc);
 }
 
